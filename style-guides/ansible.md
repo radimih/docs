@@ -2,7 +2,27 @@
 
 ## Общие правила
 
-Для registered-переменных всегда префикс `r_` или `result`, если используется только в этой же таске.
+##### Название registered-переменных
+
+Для переменных, сохраняющие результат выполнения таски через дерективу `register` всегда префикс `r_`:
+```
+- name: "Docker pull images"
+  shell:
+    cmd: docker-compose pull
+    chdir: "{{ dest }}"
+  register: result
+  changed_when: "'... status: downloaded newer image' in result.stderr | default('')"
+```
+
+или `result`, если используется только в этой же таске.
+```
+- name: "Docker pull images"
+  shell:
+    cmd: docker-compose pull
+    chdir: "{{ dest }}"
+  register: result
+  changed_when: "'... status: downloaded newer image' in result.stderr | default('')"
+```
 
 По возможности добавлять специальный заголовок в файл, содержимое которого контролируется Ansible'ом:
 ```
@@ -37,7 +57,10 @@ FSSP_UI_SERVER: "{{ STAND }}.itkms.msk"
 STAND: test-3
 ```
 
-##### Названия групп в snake_case (требование Ansible)
+##### Названия групп в snake_case
+
+Требование Ansible начиная с версии 2.10.
+
 ```
   children:
 
