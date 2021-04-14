@@ -18,7 +18,9 @@
 
 ## Inventory
 
-##### Переменные всегда ЗАГЛАВНЫМИ и по-возможности в алфавитном порядке:
+##### Имена переменных всегда ЗАГЛАВНЫМИ
+##### Переменные определяются в алфавитном порядке, кроме зависимых случаев
+
 ```
 FSSP_UI_SERVER: itkms.msk
 MINIO:
@@ -27,28 +29,24 @@ MINIO:
 STAND: test-3
 ```
 
-##### Названия групп хостов в snake_case (требование Ansible):
+##### Названия групп в snake_case (требование Ansible)
 ```
   children:
 
     app_servers:
       hosts:
         dodms-app-aio-1:
+        dodms-app-aio-2:
 
     activemq_server:
       hosts:
-        dodms-app-aio-1:
-
-    asur_integration_server:
-      hosts:
-        dodms-app-aio-1:
 
     balancer:
       hosts:
         dodms-oib-aio-1:
 ```
 
-Структура каталогов для инвентори, подходящая в 99% случаев:
+##### Структура каталогов
 ```
 ├── inventories
 │   ├── group_vars
@@ -58,6 +56,8 @@ STAND: test-3
 │   ├── preprod.yml
 │   └── prod.yml
 ```
+
+### Структура inventory-файла
 
 ## Плейбук
 
