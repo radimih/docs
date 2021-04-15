@@ -6,17 +6,21 @@
 
 Для переменных, сохраняющие результат выполнения таски через дерективу `register` всегда префикс `r_`:
 ```
-- name: "Docker pull images"
-  shell:
-    cmd: docker-compose pull
-    chdir: "{{ dest }}"
-  register: result
-  changed_when: "'... status: downloaded newer image' in result.stderr | default('')"
+- name: "Расширение {{ extension_info.name }} | Определить уже установленную версию"
+  shell: gnome-extensions info "{{ extension_info.uuid }}" | sed -n '/Version:/s/[^0-9.]*\([0-9.]*\).*/\1/p'
+  register: r_extension_installed_version
+  changed_when: no
+
+- name: "Расширение {{ extension_info.name }} | Версия установленного: {{ r_extension_installed_version.stdout or 0 }}"
+  set_fact:
+    extension_version:
+      installed: "{{ r_extension_installed_version.stdout or 0 }}"
+      website: "{{ extension_info.version }}"
 ```
 
 или `result`, если используется только в этой же таске.
 ```
-- name: "Docker pull images"
+- name: Docker pull images
   shell:
     cmd: docker-compose pull
     chdir: "{{ dest }}"
