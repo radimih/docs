@@ -2,33 +2,45 @@
 
 ## Общие правила
 
+##### Переменные определяются в алфавитном порядке
+
+Это удобно. При этом Ansible позволяет ссылаться на переменные, определенные на этом же уровне ниже.
+
+```
+FSSP_UI_SERVER: "{{ STAND }}.itkms.msk"
+STAND: test-3
+```
+
 ##### Название registered-переменных
 
-Для переменных, сохраняющие результат выполнения таски через дерективу `register` всегда префикс `r_`:
-```
-- name: "Расширение {{ extension_info.name }} | Определить уже установленную версию"
-  shell: gnome-extensions info "{{ extension_info.uuid }}" | sed -n '/Version:/s/[^0-9.]*\([0-9.]*\).*/\1/p'
-  register: r_extension_installed_version
-  changed_when: no
+* Префикс `r_` для переменных, сохраняющих результат выполнения таски через дерективу `register`:
+  ```
+  - name: "Расширение {{ extension_info.name }} | Определить уже установленную версию"
+    shell: gnome-extensions info "{{ extension_info.uuid }}" | sed -n '/Version:/s/[^0-9.]*\([0-9.]*\).*/\1/p'
+    register: r_extension_installed_version
+    changed_when: no
 
-- name: "Расширение {{ extension_info.name }} | Версия установленного: {{ r_extension_installed_version.stdout or 0 }}"
-  set_fact:
-    extension_version:
-      installed: "{{ r_extension_installed_version.stdout or 0 }}"
-      website: "{{ extension_info.version }}"
-```
+  - name: "Расширение {{ extension_info.name }} | Версия установленного: {{ r_extension_installed_version.stdout or 0 }}"
+    set_fact:
+      extension_version:
+        installed: "{{ r_extension_installed_version.stdout or 0 }}"
+        website: "{{ extension_info.version }}"
+  ```
 
-или `result`, если используется только в этой же таске.
-```
-- name: Docker pull images
-  shell:
-    cmd: docker-compose pull
-    chdir: "{{ dest }}"
-  register: result
-  changed_when: "'... status: downloaded newer image' in result.stderr | default('')"
-```
+* `result`, если используется только в этой же таске.
+  ```
+  - name: Docker pull images
+    shell:
+      cmd: docker-compose pull
+      chdir: "{{ dest }}"
+    register: result
+    changed_when: "'... status: downloaded newer image' in result.stderr | default('')"
+  ```
 
-По возможности добавлять специальный заголовок в файл, содержимое которого контролируется Ansible'ом:
+##### Заголовок файла
+
+Если содержимое файла контролируется Ansible'ом, то по возможности добавлять в него заголовок,
+сигнализирующий об этом. Например:
 ```
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # #  Managed by Ansible                                                     # #
@@ -38,7 +50,7 @@
 
 ## Inventory
 
-##### Имена переменных всегда ЗАГЛАВНЫМИ
+##### Имена переменных в inventory всегда ЗАГЛАВНЫМИ
 
 Это позволяет отделять переменные плейбуков от переменных, заданных в inventory (в ролях inventory-переменные
 использовать запрещено - см. ниже).
@@ -52,16 +64,7 @@ MINIO:
   secret_key: "minio123"
 ```
 
-##### Переменные определяются в алфавитном порядке
-
-Ansible позволяет ссылаться на переменные, определенные на этом же уровне ниже.
-
-```
-FSSP_UI_SERVER: "{{ STAND }}.itkms.msk"
-STAND: test-3
-```
-
-##### Названия групп в snake_case
+##### Группы именуются в стиле snake_case
 
 Требование Ansible начиная с версии 2.10.
 
@@ -80,6 +83,8 @@ STAND: test-3
       hosts:
         dodms-oib-aio-1:
 ```
+
+##### Группы определяются в алфавитном порядке
 
 ##### Структура каталогов
 ```
@@ -100,6 +105,7 @@ STAND: test-3
 
 ## Роли
 
-Роль ничего не должна знать об inventory. Недопустимо использовать inventory-переменные в роли.
-Если в роли необходимо реализовать инвентори-зависимый функционал, то все значения должны передаваться
-через параметры роли.
+##### Недопустимо использовать inventory-переменные в роли
+
+Роль ничего не должна знать об inventory. Если в роли необходимо реализовать инвентори-зависимый функционал,
+то все значения должны передаваться через параметры роли.
