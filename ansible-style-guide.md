@@ -184,8 +184,8 @@
 
 #### n1. Стиль именования __snake_case__ для переменных, ролей, inventory-групп и файлов
 
-Стиль **[snake_case](https://ru.wikipedia.org/wiki/Snake_case)** используется для имён модулей
-Ansible. Поэтому есть смысл распространить это соглашение на имена переменных, ролей и файлов.
+Стиль **snake_case** (см. [Википедию](https://ru.wikipedia.org/wiki/Snake_case)) используется для имён
+модулей Ansible. Поэтому есть смысл распространить это соглашение на имена переменных, ролей и файлов.
 
 Для inventory-групп это требование Ansible, начиная с версии 2.10.
 
@@ -226,9 +226,8 @@ Ansible. Поэтому есть смысл распространить это 
 
 #### n3. Имена extra-переменных в плейбуке всегда ЗАГЛАВНЫМИ буквами
 
-[Extra-переменные](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#defining-variables-at-runtime)
-— это переменные плейбука, заданные через аргументы командной строки
-`--extra-vars` (или `-e`).
+Extra-переменные (см. [Defining variables at runtime](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#defining-variables-at-runtime))
+— это переменные плейбука, заданные через аргументы командной строки `--extra-vars` (или `-e`).
 
 Extra-переменные необходимо описывать в комментариях в заголовке плейбука, чтобы
 отделять их от переменных из inventory, которые также именуются заглавными буквами.
@@ -277,7 +276,7 @@ TODO: пример
 
 #### n6. Именование registering-переменных
 
-[Registering-переменные](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#registering-variables)
+Registering-переменные (см. [Registering variables](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#registering-variables))
 — это переменные, сохраняющие результат выполнения task через директиву `register`.
 
 * Префикс `r__` (два знака подчёркивания), если переменная используется в последующих tasks:
@@ -419,7 +418,7 @@ TODO: пример
 
 #### o5. Порядок определения директив
 
-В зависимости от типа секции, [директивы](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html)
+В зависимости от типа секции, директивы (см. [Playbook Keywords](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html))
 перечисляются в следующем порядке:
 
 <table>
@@ -557,8 +556,7 @@ TODO: пример
 
 #### d4. Роли. Роль управляется только через свои аргументы
 
-Роль ничего не должна знать об **inventory** или
-[**extra**-переменных](https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#defining-variables-at-runtime).
+Роль ничего не должна знать об **inventory** или [**extra**-переменных](#n3-имена-extra-переменных-в-плейбуке-всегда-заглавными-буквами).
 Если в роли необходимо реализовать inventory-зависимый функционал или использовать extra-переменные,
 то все необходимые значения должны передаваться через [аргументы роли](#d5-роли-аргументы).
 
@@ -608,8 +606,8 @@ TODO: пример
 TODO: пример вызова роли с аргументами
 ```
 
-Все аргументы роли [описываются](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#specification-format)
-в файле `meta/main.yml`.
+Все аргументы роли описываются в файле `meta/main.yml`
+(см. [Role argument validation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-argument-validation)).
 
 Аргументы роли могут быть двух типов:
 * **обязательные** — роль не может выполняться без задания значений этих переменных при вызове роли
