@@ -182,10 +182,10 @@
 
 ## Именование (Naming)
 
-#### n1. Стиль именования __snake_case__ для переменных, ролей, inventory-групп и файлов
+#### n1. Стиль именования _snake_case_ для переменных, ролей, inventory-групп и файлов
 
-Стиль **snake_case** (см. [Википедию](https://ru.wikipedia.org/wiki/Snake_case)) используется для имён
-модулей Ansible. Поэтому есть смысл распространить это соглашение на имена переменных, ролей и файлов.
+Так как все стандартные модули Ansible именуются в стиле [**snake_case**](https://ru.wikipedia.org/wiki/Snake_case),
+есть смысл распространить это соглашение на имена переменных, ролей и файлов.
 
 Для inventory-групп это требование Ansible, начиная с версии 2.10.
 
@@ -444,7 +444,8 @@ Task
 <td valign="top">
 
 1. `hosts`
-1. остальные [play-директивы](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#play)
+1. остальные [play-директивы](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#play)<br>
+   в **произвольном** порядке
 1. `pre_tasks`
 1. `roles` / `tasks`
 1. `post_tasks`
@@ -460,8 +461,9 @@ TODO: пример
 
 1. `role`
 1. `vars`
-   * аргументы роли в **произвольном** порядке
-1. остальные [role-директивы](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#role)
+   * аргументы роли<br> в **произвольном** порядке
+1. остальные [role-директивы](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#role)<br>
+   в **произвольном** порядке
 1. `tags`
 
 
@@ -477,8 +479,9 @@ TODO: пример
 
 1. `name`
 1. модуль
-   * параметры модуля в **произвольном** порядке
-1. остальные [task-директивы](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#task)
+   * параметры модуля<br> в **произвольном** порядке
+1. остальные [task-директивы](https://docs.ansible.com/ansible/latest/reference_appendices/playbooks_keywords.html#task)<br>
+   в **произвольном** порядке
 1. `tags`
 
 ```yaml
@@ -493,7 +496,7 @@ TODO: пример
 <tr>
 <td colspan="3">
 
-1. Секция начинается с _ключевой директивы_: `hosts`, `role` или `name`.
+1. Секция начинается с _ключевой директивы_: `hosts`, `role` или `name` (директива `name` необязательна для модулей `import_*` и `include_*`).
 1. Далее для секций **role** и **task** указывается _роль_ с аргументами или _модуль_ с соответствующими параметрами.
 1. Далее следуют _остальные директивы_ секции в произвольном порядке.
 1. Далее для секции **play** следуют директивы в порядке их выполнения: `pre_tasks`, `roles`, `tasks`, `post_tasks`, `handlers`
