@@ -609,12 +609,40 @@ TODO: пример
 TODO: пример вызова роли с аргументами
 ```
 
-Все аргументы роли описываются в файле `meta/main.yml`
+Аргументы роли описываются в файле `meta/main.yml`
 (см. [Role argument validation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-argument-validation))
-в секции `argument_specs`:
+в блоке `argument_specs`:
 
 * `meta/main.yml`:
   ```yaml
+  ---
+  galaxy_info:
+    ...
+  
+  dependencies:
+    ...
+
+  argument_specs:
+    main:
+      options:
+        <имя аргумента 1>:
+          description: <краткое описание аргумента>
+          required: true
+          type: <тип аргумента>
+          [choices:]
+          [elememts:]
+          [options:]
+        <имя аргумента 2>:
+          ...
+        <имя аргумента N>:
+          ...
+  ```
+
+Пример:
+
+* `meta/main.yml`:
+  ```yaml
+  ---
   galaxy_info:
     author: Radimir Mikhailov
     description: Install apt-based third party package
@@ -662,21 +690,6 @@ TODO: пример вызова роли с аргументами
 Аргументы роли могут быть двух типов:
 * **обязательные** — роль не может выполняться без задания значений этих переменных при вызове роли
 * **необязательные** — роль выполняется со значениями по-умолчанию, если эти переменные не заданы при вызове роли
-
-Примеры:
-
-* `meta/main.yml` (у роли с тремя обязательными и двумя необязательными аргументами):
-  ```yaml
-  ---
-  ```
-
-* `defaults/main.yml` (у роли без аргументов):
-  ```yaml
-  ---
-  ```
-
-Таким образом, глядя в `meta/main.yml`, всегда видно **все** аргументы роли
-(или их отсутствие, если роль не принимает никаких параметров).
 
 #### d6. Роли. Приватные переменные
 
