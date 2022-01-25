@@ -625,18 +625,24 @@ TODO: пример вызова роли с аргументами
   argument_specs:
     main:
       options:
-        <имя аргумента 1>:
+        <имя_аргумента_1>:
           description: <краткое описание аргумента>
-          required: true
+          required: <true или false>
           type: <тип аргумента>
           [choices:]
           [elememts:]
           [options:]
-        <имя аргумента 2>:
+        <имя_аргумента_2>:
           ...
-        <имя аргумента N>:
+        <имя_аргумента_N>:
           ...
   ```
+  
+Примечания:
+* Для каждого аргумента необходимо обязательно определить опции `description`, `required` и `type`. Остальные опции необязательные.
+* Опция `default` (значение по-умолчанию) никогда не определяется.
+* Необходимо следить за тем, чтобы аргументы, объявленные как `required: true` не 
+* Полное описание опций смотрите в [Specification format](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#specification-format).
 
 Пример:
 
