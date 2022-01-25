@@ -610,7 +610,54 @@ TODO: пример вызова роли с аргументами
 ```
 
 Все аргументы роли описываются в файле `meta/main.yml`
-(см. [Role argument validation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-argument-validation)).
+(см. [Role argument validation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-argument-validation))
+в секции `argument_specs`:
+
+* `meta/main.yml`:
+  ```yaml
+  galaxy_info:
+    author: Radimir Mikhailov
+    description: Install apt-based third party package
+    license: MIT
+
+    min_ansible_version: 2.11
+
+    platforms:
+      - name: Debian
+        versions:
+          - all
+      - name: Ubuntu
+        versions:
+          - all
+
+    galaxy_tags: []
+
+  dependencies: []
+
+  argument_specs:
+    main:
+      options:
+        key_url:
+          description: Public key URL of the repository
+          required: true
+          type: str
+        repo_url:
+          description: Repository URL
+          required: true
+          type: str
+        repo_component:
+          description: Repository component
+          required: true
+          type: str
+          choices:
+            - contrib
+            - main
+            - non-free
+        package_name:
+          description: Package name
+          required: true
+          type: str
+  ```
 
 Аргументы роли могут быть двух типов:
 * **обязательные** — роль не может выполняться без задания значений этих переменных при вызове роли
