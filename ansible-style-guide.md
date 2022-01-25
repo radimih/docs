@@ -724,5 +724,6 @@ TODO: пример вызова роли с аргументами
 * `ansible.cfg`
 * `editorconfig`
 * `.gitattributes`
+* `cookiecutter`
 * `yamlint`
 * `ansiblelint`
