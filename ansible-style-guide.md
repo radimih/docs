@@ -665,25 +665,55 @@ TODO: пример
 
 Важные замечания:
 * Необходимо следить за тем, чтобы аргументы, объявленные как **обязательные** (`required: true`) не определялись в `defaults/main.yml`.
-  Потому что Ansible не среагирует, если аргумент фактически не бужет задан при вызове роли, а просто возьмёт значение по-умолчанию.
+  Потому что Ansible не среагирует в случае, если аргумент не будет задан при вызове роли, а просто возьмёт значение по-умолчанию.
 * К сожалению, нельзя расчитывать на доскональную проверку типов аргументов. Проверка производится через попытку конвертировать входное значение
   аргумента в объявленный тип. И например, для аргумента типа `str` Ansible пропустит входное значение в виде списка. Потому что
   в Python список может автоматически конвертироваться в строку.
 
-Пример описания роли с четырмя обязательными параметрами:
+Пример вымышленной роли с двумя обязательными аргументами, один из которых является списком словарей:
+
+* плейбук:
+  ```yaml
+  ---
+  - name: Установить стандартный набор апплетов
+    hosts: 127.0.0.1
+    connection: local
+
+    roles:
+
+      - role: applets
+        vars:
+          manager_port: 9999
+          apps:
+            - { name: app1, port: 8080, enabled: true, type: system, alias: main-app }
+            - { name: app2, port: 8081, enabled: false, type: user }
+        tags:
+          - applets
+  ```
 
 * `meta/main.yml`:
   ```yaml
   ---
   galaxy_info:
     author: Radimir Mikhailov
-    description: Install apt-based third party package
+    description: Install applets
+    company: IT2G
+
     license: MIT
 
     min_ansible_version: 2.11
 
     platforms:
+      - name: Alpine
+        versions:
+          - all
       - name: Debian
+        versions:
+          - all
+      - name: EL
+        versions:
+          - all
+      - name: Fedora
         versions:
           - all
       - name: Ubuntu
@@ -697,26 +727,39 @@ TODO: пример
   argument_specs:
     main:
       options:
-        key_url:
-          description: Public key URL of the repository
+        manager_port:
+          description: Порт, на котором располагается центр управления апплетами
           required: true
           type: str
-        package_name:
-          description: Package name
+        apps:
+          description: Список апплетов
           required: true
-          type: str
-        repo_url:
-          description: Repository URL
-          required: true
-          type: str
-        repo_component:
-          description: Repository component
-          required: true
-          type: str
-          choices:
-            - contrib
-            - main
-            - non-free
+          type: list
+          elements: dict
+          options:
+            alias:
+              description: Необязательный псевдоним апплета
+              required: false
+              type: str
+            enabled:
+              description: Статус апплета
+              required: true
+              type: bool
+            name:
+              description: Название апплета
+              required: true
+              type: str
+            port:
+              description: Порт апплета
+              required: true
+              type: int
+            type:
+              description: Тип апплета
+              required: true
+              type: str
+              choices:
+                - system
+                - user
   ```
 
 #### d6. Роли. Приватные переменные
