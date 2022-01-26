@@ -617,7 +617,7 @@ TODO: пример
 ```
 
 Аргументы роли описываются в файле `meta/main.yml`
-(см. [Role argument validation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-argument-validation))
+(см. [Role argument validation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-argument-validation)),
 в блоке `argument_specs`:
 
 * `meta/main.yml`:
@@ -636,8 +636,8 @@ TODO: пример
           description: <краткое описание аргумента>
           required: <true | false>
           type: <тип аргумента: str | int | float | bool | list | dict | bits | bytes | json | jsonarg | path | raw >
-          [choices: <список возможных значений, если type: list>]
-          [elememts: <тип элемента списка, если type: list>]
+          [choices: <список возможных значений, если type=list>]
+          [elememts: <тип элемента списка, если type = list>]
           [options:]
         <имя_аргумента_2>:
           ...
