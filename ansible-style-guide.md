@@ -650,7 +650,12 @@ TODO: пример
 * `meta/main.yml`:
   ```yaml
   ---
-  ...
+  galaxy_info:
+    ...
+  
+  dependencies:
+    ...
+
   argument_specs:
     main:
   ```
