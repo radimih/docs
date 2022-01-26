@@ -636,9 +636,9 @@ TODO: пример
           description: <краткое описание аргумента>
           required: <true | false>
           type: <тип аргумента: str | int | float | bool | list | dict | bits | bytes | json | jsonarg | path | raw >
-          [choices: <список возможных значений, если type=list>]
+          [choices: <список возможных значений, если type = list>]
           [elememts: <тип элемента списка, если type = list>]
-          [options:]
+          [options: <описание структуры, если type = dict или type = list, elements = dict]
         <имя_аргумента_2>:
           ...
         <имя_аргумента_N>:
