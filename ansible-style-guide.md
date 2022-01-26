@@ -638,7 +638,7 @@ TODO: пример
           type: <тип аргумента: str | int | float | bool | list | dict | bits | bytes | json | jsonarg | path | raw >
           [choices: <список возможных значений, если type = list>]
           [elememts: <тип элемента списка, если type = list>]
-          [options: <описание структуры, если type = dict или type = list, elements = dict]
+          [options: <описание структуры, если (type = dict) | (type = list & elements = dict)]
         <имя_аргумента_2>:
           ...
         <имя_аргумента_N>:
