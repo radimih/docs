@@ -653,7 +653,7 @@ TODO: пример
 
 Полное описание всех опций смотрите в [Specification format](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#specification-format).
 
-Если роль не принимает никаких аргументов, то в `argument_specs` задаётся _пустая_ точка входа в роль по-умолчанию (`main`):
+Если роль не принимает никаких аргументов, то в `argument_specs` задаётся _пустая_ точка входа в роль (`main` по-умолчанию):
 
 * `meta/main.yml`:
   ```yaml
