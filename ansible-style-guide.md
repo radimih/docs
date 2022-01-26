@@ -606,7 +606,14 @@ TODO: пример
 Служат для задания входных параметров роли.
 
 ```yaml
-TODO: пример вызова роли с аргументами
+- role: apt_thirdparty_package
+  vars:
+    key_url: https://apt.releases.hashicorp.com/gpg
+    repo_url: https://apt.releases.hashicorp.com
+    repo_component: main
+    package_name: vagrant
+  when:
+    - ansible_os_family == 'Debian'
 ```
 
 Аргументы роли описываются в файле `meta/main.yml`
@@ -627,8 +634,8 @@ TODO: пример вызова роли с аргументами
       options:
         <имя_аргумента_1>:
           description: <краткое описание аргумента>
-          required: <true или false>
-          type: <тип аргумента>
+          required: <true | false>
+          type: <тип аргумента: str | int | float | bool | list | dict | bits | bytes | json | jsonarg | path | raw >
           [choices: <список возможных значений, если type: list>]
           [elememts: <тип элемента списка, если type: list>]
           [options:]
@@ -641,6 +648,8 @@ TODO: пример вызова роли с аргументами
 Для каждого аргумента необходимо обязательно определить опции `description`, `required` и `type`. Остальные опции необязательные.
 
 Опция `default` (значение **по-умолчанию**) никогда не определяется.
+
+Если указывается тип аргумента `raw`, то проверка входного значения аргумента при вызове роли производиться не будет.
 
 Полное описание всех опций смотрите в [Specification format](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#specification-format).
 
