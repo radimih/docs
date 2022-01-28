@@ -773,6 +773,29 @@ TODO: пример
 
 Подкаталог `defaults` служит _только_ для определения необязательных аргументов.
 
+* `meta/main.yml`:
+  ```yaml
+  ---
+  ...
+  argument_specs:
+    main:
+      options:
+        service_name:
+          description: Имя сервиса
+          required: true
+          type: str
+        service_port:
+          description: Порт, на котором располагается сервис
+          required: false
+          type: str
+  ```
+
+* `defaults/main.yml`:
+  ```yaml
+  ---
+  service_port: 8000
+  ```
+
 #### d7. Роли. Приватные переменные и подкаталог `vars`
 
 Приватные переменные роли — это переменные, которые определяются и используются исключительно
