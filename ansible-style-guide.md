@@ -807,12 +807,26 @@ TODO: пример
 
 Пример того, какой эффект оказывает этот параметр при использовании ролей:
 
+* `roles/test/meta/main.yml`:
+  ```yaml
+  ---
+  ...
+  argument_specs:
+    main:
+      options:
+        service_name:
+          description: Имя сервиса
+          required: true
+          type: str
+        service_port:
+          description: Порт, на котором располагается сервис
+          required: false
+          type: str
+  ```
+
 * `roles/test/defaults/main.yml`:
   ```yaml
   ---
-  _required_vars:
-    - service_name
-
   service_port: 8000
   ```
 
@@ -830,6 +844,7 @@ TODO: пример
     connection: local
     gather_facts: false
     roles:
+
       - role: test
         vars:
           service_name: service_one
@@ -860,9 +875,7 @@ TODO: пример
   ```
   PLAY [127.0.0.1] *********************************************************************************
 
-  TASK [test : Install 'service_one'] ****************************************#### d6. Роли. Приватные переменные
-
-**********************
+  TASK [test : Install 'service_one'] **************************************************************
   ok: [127.0.0.1] => {
       "service_port": 9999
   }
