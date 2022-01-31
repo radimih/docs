@@ -620,9 +620,8 @@ TODO: пример
     - ansible_os_family == 'Debian'
 ```
 
-Аргументы роли описываются в файле `meta/main.yml`
-(см. [Role argument validation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-argument-validation)),
-в блоке `argument_specs`:
+Все аргументы роли должны быть описаны в файле `meta/main.yml`, в блоке `argument_specs`
+(см. [Role argument validation](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#role-argument-validation)):
 
 * `meta/main.yml`:
   ```yaml
@@ -649,6 +648,14 @@ TODO: пример
           ...
   ```
 
+Для каждого аргумента обязательно определяются опции `description`, `required` и `type`. Остальные опции являются необязательными.
+
+Опция `default` (значение **по-умолчанию**) никогда не определяется.
+
+Если указывается тип аргумента `raw`, то тип входного значения для этого аргумента не валидируется.
+
+Полное описание всех опций смотрите в [Specification format](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#specification-format).
+
 Если роль не принимает никаких аргументов, то `argument_specs` задаётся _пустым_:
 
 * `meta/main.yml`:
@@ -662,14 +669,6 @@ TODO: пример
 
   argument_specs:
   ```
-
-Для каждого аргумента обязательно определяются опции `description`, `required` и `type`. Остальные опции являются необязательными.
-
-Опция `default` (значение **по-умолчанию**) никогда не определяется.
-
-Если указывается тип аргумента `raw`, то тип входного значения для этого аргумента не валидируется.
-
-Полное описание всех опций смотрите в [Specification format](https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html#specification-format).
 
 Важные замечания:
 * Необходимо следить за тем, чтобы аргументы, объявленные как **обязательные** (`required: true`) не определялись в `defaults/main.yml`.
