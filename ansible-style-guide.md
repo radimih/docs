@@ -566,11 +566,15 @@ TODO: пример
 
 Например, не устанавливать RabbitMQ на стенде **dev**:
 
-* плейбук:
+* плейбук - _одинаковый_ для всех стендов:
   ```yaml
   - hosts: rabbitmq_server:
     roles:
-      - role: activemq
+      - role: rabbitmq
+
+  - hosts: redis_servers:
+    roles:
+      - role: redis
   ```
 
 * inventory стенда **dev**:
@@ -580,7 +584,7 @@ TODO: пример
     rabbitmq_server:
       hosts:
 
-    minio_servers:
+    redis_servers:
       hosts:
         dodms-app-aio-1:
         dodms-app-aio-2:
