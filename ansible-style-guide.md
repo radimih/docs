@@ -165,7 +165,38 @@
       src: defaults.conf
   ```
 
-#### s3. Значения директивы `tags` всегда задаются в виде списка
+#### s3. Короткая версия записи role
+
+Короткую версию записи **role** можно использовать только когда роль вызывается без [аргументов](#r1-аргументы-роли)
+и длина строки не превышает 100 символов.
+
+* плохо:
+  ```yaml
+  - { role: manage_repository, thirdparty_repos_enable: true, tags: [initial, never] }
+  - { role: prepare_2020, delegate_to: localhost, when: ansible_date_time.year|int <= 2020, tags: [prepare, year2020] }
+  ```
+
+* хорошо:
+  ```yaml
+  - { role: server_defaults, tags: [initial] }
+  - { role: debian_defaults, when: ansible_os_family == 'Debian', tags: [defaults, never] }
+
+  - role: manage_repository
+    vars:
+      thirdparty_repos_enable: true
+    tags:
+      - initial
+      - never
+
+  - role: prepare_2020
+    delegate_to: localhost
+    when: ansible_date_time.year|int <= 2020
+    tags:
+      - prepare
+      - year2020
+  ```
+
+#### s4. Значения директивы `tags` всегда задаются в виде списка
 
 Такой синтаксис позволяет легко добавлять и удалять тэги.
 
@@ -520,14 +551,6 @@ TODO: пример
 </tr>
 </tbody>
 </table>
-
-Допустимо использовать короткую версию записи role, если эта запись не будет слишком длинной:
-
-```yaml
-- { role: server_defaults, tags: [initial] }
-- { role: manage_repository, thirdparty_repos_enable: true, tags: [initial, never] }
-- { role: manage_docker, insecure_registries: ["172.17.21.6:4444"], registry_mirrors: ["http://172.17.21.6:4444"] }
-```
 
 ## Дизайн (Design)
 
