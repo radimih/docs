@@ -586,8 +586,22 @@ TODO: пример
 
     redis_servers:
       hosts:
-        dodms-app-aio-1:
-        dodms-app-aio-2:
+        app-dev-1:
+        app-dev-2:
+  ```
+
+* inventory стенда **stage**:
+  ```yaml
+  children:
+
+    rabbitmq_server:
+      hosts:
+        app-stage-1:
+
+    redis_servers:
+      hosts:
+        app-stage-1:
+        app-stage-2:
   ```
 
 #### d2. Роль управляется только через свои аргументы
