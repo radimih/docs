@@ -559,23 +559,25 @@ TODO: пример
 
 #### d1. Один плейбук — много стендов
 
-Плейбук не должен быть специфичным для какого-либо стенда.
+Плейбук не должен быть специфичным для какого-либо стенда (dev, stage, preprod, prod).
 
-Если какой-либо play не должен выполняться на определенном стенде, то в inventory стенда
-соответствующая группа объявляется пустой (`activemq_server` в примере):
+Если часть плейбука не должна выполняться на определенном стенде, то это достигается путём объявления
+в inventory стенда соответствующих групп _пустыми_ (группа `rabbitmq_server` в примере ниже).
 
-* play:
+Например, не устанавливать RabbitMQ на стенде **dev**:
+
+* плейбук:
   ```yaml
-  - hosts: activemq_server:
+  - hosts: rabbitmq_server:
     roles:
-      - activemq
+      - role: activemq
   ```
 
-* inventory:
+* inventory стенда **dev**:
   ```yaml
   children:
 
-    activemq_server:
+    rabbitmq_server:
       hosts:
 
     minio_servers:
