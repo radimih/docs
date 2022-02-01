@@ -1,7 +1,7 @@
 **Style Guide для Ansible**
 
 > Версия документа: `1.0`<br/>
-> Дата документа: `2022-01-XX`
+> Дата документа: `2022-02-XX`
 
 ---
 
@@ -649,12 +649,6 @@ TODO: пример
           app-srv-sdo-1:
   ```
 
-## Inventory
-
-#### i1. Предпочтительная структура (TODO)
-
-#### i2. Определение inventory-зависимых переменных (TODO)
-
 ## Роли (Roles)
 
 #### r1. Аргументы роли
@@ -962,12 +956,3 @@ TODO: пример
       "service_port": 8000
   }
   ```
-
-## Приложение. Инструментарий (TODO)
-
-* `ansible.cfg`
-* `editorconfig`
-* `.gitattributes`
-* `cookiecutter`
-* `yamlint`
-* `ansiblelint`
