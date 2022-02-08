@@ -169,13 +169,24 @@
 
 * плохо:
   ```yaml
-  name: 'fdfd'
+  - name: 'Create Docker plugins directory if it does not exist'
+    file:
+      path: '/usr/lib/docker/cli-plugins'
+      state: 'directory'
+      mode: '0755'
+
+
   port: 8080:80
   ```
 
 * хорошо:
   ```yaml
-  name:
+  - name: Create Docker plugins directory if it does not exist
+    file:
+      path: /usr/lib/docker/cli-plugins
+      state: directory
+      mode: 0755
+
   version: '1.0'
   port: '8080:80'
   separator: "\t"
