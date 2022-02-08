@@ -185,9 +185,11 @@
       mode: 0755
   ```
   ```yaml
-  package_distribution: '{{ ansible_distribution | lower }}'
-  package_version: '1.0'
-  column_separator: "\t"
+  package_distribution: '{{ ansible_distribution | lower }}'  # без кавычек будет синтаксическая ошибка YAML
+  package_version: '1.0'  # без кавычек переменная примет числовое значение 1
+  column_separator: '#'   # без кавычек переменная примет значение null
+  column_separator: "\t"  # без кавычек или в одинарных кавычках переменная примет строковое значение
+                          # из двух символов - '\' и 't', а в двойных кавычках - знак табуляции
   ```
 
 #### s3. Двойные кавычки `"` вместо одинарных `'` используются только по необходимости
