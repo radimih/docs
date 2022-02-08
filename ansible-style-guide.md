@@ -170,7 +170,7 @@
 * плохо:
   ```yaml
   - name: 'Create Docker plugins directory {{ _docker_plugin_subdir }} if it does not exist'
-    file:
+    ansible.builtin.file:
       path: '/usr/lib/docker/{{ _docker_plugin_subdir }}'
       state: 'directory'
       mode: '755'
@@ -179,10 +179,10 @@
 * хорошо:
   ```yaml
   - name: Create Docker plugins directory {{ _docker_plugin_subdir }} if it does not exist
-    file:
+    ansible.builtin.file:
       path: /usr/lib/docker/{{ _docker_plugin_subdir }}
       state: directory
-      mode: 0755  # скаляр, начинающийся с символа '0' интерпретируется в YAML как восьмеричное число
+      mode: 0755  # набор цифр, начинающийся с 0 интерпретируется в YAML как восьмеричное число
   ```
   ```yaml
   package_distribution: '{{ ansible_distribution | lower }}'  # без кавычек будет синтаксическая ошибка YAML
