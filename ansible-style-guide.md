@@ -308,7 +308,7 @@
       ansible_user: 'root'
 
       LOKI_PORT: 3100
-      LOKI_SERVER: "{{ hostvars[groups['loki_server'][0]].ansible_host }}"
+      LOKI_SERVER: '{{ hostvars[groups["loki_server"][0]].ansible_host }}'
       LOKI_URL: http://{{ LOKI_SERVER }}:{{ LOKI_PORT }}/loki/api/v1/push
       MINIO:
         ACCESS_KEY: "minio"
@@ -339,13 +339,12 @@ Extra-переменные необходимо описывать в комме
           service_port: 8064
           dest: /opt/{{ service_name }}
           compose: |
-            version: "3.4"
             services:
               service:
                 image: it2g/dodms/{{ service_name }}:{{ CICD_IMAGES_TAG }}
                 restart: always
                 ports:
-                  - "{{ service_port }}:80"
+                  - '{{ service_port }}:80'
     tags:
       - ms-dodms-ui
   ```
@@ -371,16 +370,16 @@ Registering-переменные (см. [Registering variables](https://docs.ans
 
 * Префикс `r__` (два знака подчёркивания), если переменная используется в последующих tasks:
   ```yaml
-  - name: "Расширение {{ extension_info.name }} | Определить уже установленную версию"
+  - name: Расширение {{ extension_info.name }} | Определить уже установленную версию
     shell: gnome-extensions info "{{ extension_info.uuid }}" | sed -n '/Version:/s/[^0-9.]*\([0-9.]*\).*/\1/p'
     register: r__extension_installed_version
     changed_when: false
 
-  - name: "Расширение {{ extension_info.name }} | Версия установленного: {{ r__extension_installed_version.stdout or 0 }}"
+  - name: Расширение {{ extension_info.name }} | Версия установленного: {{ r__extension_installed_version.stdout or 0 }}
     set_fact:
       _extension_version:
-        installed: "{{ r__extension_installed_version.stdout or 0 }}"
-        website: "{{ extension_info.version }}"
+        installed: '{{ r__extension_installed_version.stdout or 0 }}'
+        website: '{{ extension_info.version }}'
   ```
 
 * `result`, если переменная используется _только_ в пределах task:
@@ -388,7 +387,7 @@ Registering-переменные (см. [Registering variables](https://docs.ans
   - name: Docker pull images
     command:
       cmd: docker-compose pull
-      chdir: "{{ dest }}"
+      chdir: '{{ dest }}'
     register: result
     changed_when: "'... status: downloaded newer image' in result.stderr | default('')"
   ```
@@ -680,8 +679,8 @@ TODO: пример
     roles:
       - role: lms
         vars:
-          deploy_images_tag: "{{ CICD_IMAGES_TAG }}"
-          deploy_stand: "{{ STAND }}"
+          deploy_images_tag: '{{ CICD_IMAGES_TAG }}'
+          deploy_stand: '{{ STAND }}'
           xapi_service: "{{ hostvars[groups['xapi_server'][0]].ansible_host }}:8081"
     tags:
       - lms
