@@ -83,12 +83,12 @@
       restart: always
       environment:
         ADMIN_MAIL_SUPPORT: hd-{{ STAND }}@it2g.ru
-      {% if STAND != "prod" %}
+      {% if STAND != 'prod' %}
         JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
       {% endif %}
         SPRING_PROFILES_ACTIVE: std-{{ STAND }}
       ports:
-        - "5005:5005"
+        - '5005:5005'
   ```
   _Обратите внимание: блочные Jinja2-тэги располагаются со сдвигом влево относительного самого
   содержимого блока. Это позволяет визуально выделить эти тэги из общего контекста и одновременно
@@ -106,7 +106,7 @@
         JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
         SPRING_PROFILES_ACTIVE: std-test
       ports:
-        - "5005:5005"
+        - '5005:5005'
   ```
 
 * `docker-compose.yml` при `STAND == 'prod'`:
@@ -119,7 +119,7 @@
         ADMIN_MAIL_SUPPORT: hd-prod@it2g.ru
         SPRING_PROFILES_ACTIVE: std-prod
       ports:
-        - "5005:5005"
+        - '5005:5005'
   ```
 
 #### f6. Заголовок файла, содержимое которого управляется через Ansible
