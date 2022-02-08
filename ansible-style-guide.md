@@ -164,31 +164,31 @@
 Скаляр — это [YAML-узел](https://yaml.org/spec/1.2.2/#3211-nodes), представляющий единичное значение
 — _строку_, _число_, _логическое значение_ или _null_.
 
-Для улучшения читабильности скаляры обрамляются в кавычки только если в этом возникает
+Для лучшего восприятия скаляры обрамляются в кавычки только если в этом возникает
 реальная необходимость (см. приложение [Когда скаляр в YAML необходимо обрамлять в кавычки](#приложение-1-когда-скаляр-в-yaml-необходимо-обрамлять-в-кавычки)).
 
 * плохо:
   ```yaml
-  - name: 'Create Docker plugins directory {{ _docker_plugin_subdir }} if it does not exist'
+  - name: 'Create Docker plugins directory ''{{ _docker_plugin_subdir }}'' if it does not exist'
     ansible.builtin.file:
       path: '/usr/lib/docker/{{ _docker_plugin_subdir }}'
       state: 'directory'
-      mode: '755'
+      ...
   ```
 
 * хорошо:
   ```yaml
-  - name: Create Docker plugins directory {{ _docker_plugin_subdir }} if it does not exist
+  - name: Create Docker plugins directory '{{ _docker_plugin_subdir }}' if it does not exist
     ansible.builtin.file:
       path: /usr/lib/docker/{{ _docker_plugin_subdir }}
       state: directory
-      mode: 0755  # набор цифр, начинающийся с 0 интерпретируется в YAML как восьмеричное число
+      ...
   ```
   ```yaml
   package_distribution: '{{ ansible_distribution | lower }}'  # без кавычек будет синтаксическая ошибка YAML
   package_version: '1.0'   # без кавычек переменная примет числовое значение = 1
-  column_separator1: '#'   # без кавычек переменная примет значение null, так как с комбинации <пробел>#
-                           # в YAML начинается комментарий
+  column_separator1: '#'   # без кавычек переменная примет значение null, так как комбинация <пробел>#
+                           # будет интерпретироваться как начало комментария
   column_separator2: "\t"  # без кавычек или в одинарных кавычках переменная примет строковое значение
                            # из двух символов - '\' и 't', а в двойных кавычках - знак табуляции
   ```
