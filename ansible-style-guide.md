@@ -169,26 +169,23 @@
 
 * плохо:
   ```yaml
-  - name: 'Create Docker plugins directory if it does not exist'
+  - name: 'Create Docker plugins directory {{ _docker_plugin_subdir }} if it does not exist'
     file:
-      path: '/usr/lib/docker/cli-plugins'
+      path: '/usr/lib/docker/{{ _docker_plugin_subdir }}'
       state: 'directory'
-      mode: '0755'
-
-
-  port: 8080:80
+      mode: '755'
   ```
 
 * хорошо:
   ```yaml
-  - name: Create Docker plugins directory if it does not exist
+  - name: Create Docker plugins directory {{ _docker_plugin_subdir }} if it does not exist
     file:
-      path: /usr/lib/docker/cli-plugins
+      path: /usr/lib/docker/{{ _docker_plugin_subdir }}
       state: directory
       mode: 0755
-
+  ```
+  ```yaml
   version: '1.0'
-  port: '8080:80'
   separator: "\t"
   ```
 
