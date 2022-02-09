@@ -910,11 +910,11 @@ TODO: пример
 * `vars/main.yml`:
   ```yaml
   ---
-  # Асболютный путь (без последнего слэша) к каталогу где хранятся PGP-ключи
+  # Асболютный путь к каталогу где хранятся PGP-ключи
   # репозиториев у соответствующего пакетного менеджера ОС
   _pgp_keys_path:
-    apt: /etc/apt/trusted.gpg.d
-    yum: /etc/pki/rpm-gpg
+    apt: /etc/apt/trusted.gpg.d/
+    yum: /etc/pki/rpm-gpg/
 
   _nexus_repo_docker_yum: docker-ce-centos7
   _nexus_repo_centos_extras: extras-centos7
