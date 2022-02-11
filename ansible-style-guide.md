@@ -203,23 +203,19 @@
 
 * плохо:
   ```yaml
-  phrase: "{{ user.name }} - you name"  # ничего не мешает использовать одинарные кавычки
+  column_separator: '\t'            # вместо знака табуляции переменная примет строку из двух символов - '\' и 't'
+  port: "{{ _port | default(0) }}"  # ничего не мешает использовать одинарные кавычки
   ```
 
 * хорошо:
   ```yaml
-  - name: внутри default не можем вставить символ '
-    debug:
-      msg: "{{ qqq | default('It is not my life') }}"
-
-  - name: внутри default можем вставить символ '
-    debug:
-      msg: "{{ qqq | default(\"It's my life\") }}"
-  ```
-  ```yaml
   column_separator: "\t"
-  phrase_variant1: "{{ user.name }} - it's you name"
-  phrase_variant2: '{{ user.name }} - it''s you name'  #
+  port: '{{ _port | default(0) }}'
+
+  name_v1: "{{ _defalut_name | default('Noname') }}"
+  name_v2: "{{ _defalut_name | default(\"'Noname'\") }}"  # когда само значение по-умолчанию содержит одинарные кавычки
+  phrase_v1: "{{ user.name }} - it's you name"
+  phrase_v2: '{{ user.name }} - it''s you name'  # а можно обойтись только одинарными кавычками
   ```
 
 #### s4. Директивы определяются только через map-синтаксис
