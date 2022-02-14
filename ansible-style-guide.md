@@ -1071,7 +1071,9 @@ TODO: пример
 (`\t`, `\x1B`, `\u2029` и т.д.), то эту строку необходимо обрамлять в **двойные** кавычки `"`:
 
   ```yaml
-  TODO: пример
+  column_separator: "\t"     # знак табуляции
+  currency_symbol: "\u20bd"  # знак рубля (₽)
+  text: "Line 1\nLine 2"     # две строки
   ```
 
 Правила экранирования:
@@ -1085,4 +1087,4 @@ TODO: пример
   * символа `"`: YAML: `sample: "My alias is \""` → JSON: `{ "sample": "It's my life" }`
   * символа `\`: YAML: `sample: "It's backslash: \\"` → JSON: `{ "sample": "It's backslash: \\" }`
 
-Хорошая статья на тему обрамления в кавычки в YAML: [Quoting](https://www.yaml.info/learn/quote.html).
+Хорошая статья на тему кавычкек в YAML: [Quoting](https://www.yaml.info/learn/quote.html).
