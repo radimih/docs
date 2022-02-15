@@ -995,7 +995,7 @@ TODO: пример
   text: "Line 1\nLine 2"     # две строки
   ```
 
-Хорошая статья на тему кавычкек в YAML: [Quoting](https://www.yaml.info/learn/quote.html).
+Хорошая статья на тему кавычек в YAML: [Quoting](https://www.yaml.info/learn/quote.html).
 
 #### Приложение 2.
 
@@ -1077,6 +1077,8 @@ TODO: пример
         ansible.builtin.debug:
           var: _role_private_var
   ```
+
+Ниже приводится вывод запусков плейбука при разных значениях параметра `private_role_vars`.
 
 ##### `private_role_vars = false` (значение по-умолчанию):
 
