@@ -942,86 +942,7 @@ TODO: пример
   private_role_vars = true
   ```
 
-Пример того, какой эффект оказывает этот параметр при использовании ролей:
-
-* `roles/test/meta/main.yml`:
-  ```yaml
-  ---
-  ...
-  argument_specs:
-    main:
-      options:
-        service_name:
-          description: Имя сервиса
-          required: true
-          type: str
-        service_port:
-          description: Порт, на котором располагается сервис
-          required: false
-          type: str
-  ```
-
-* `roles/test/defaults/main.yml`:
-  ```yaml
-  ---
-  service_port: 8000
-  ```
-
-* `roles/test/tasks/main.yml`:
-  ```yaml
-  ---
-  - name: Install '{{ service_name }}'
-    debug:
-      var: service_port
-  ```
-
-* плейбук:
-  ```yaml
-  - hosts: 127.0.0.1
-    connection: local
-    gather_facts: false
-    roles:
-
-      - role: test
-        vars:
-          service_name: service_one
-          service_port: 9999
-
-      - role: test
-        vars:
-          service_name: service_two
-          # ожидается, что service_port при выполнении этой роли примет значнение по-умолчанию (8000)
-  ```
-
-* Выполнение плейбука при `private_role_vars = false` (значение по-умолчанию):
-  ```
-  PLAY [127.0.0.1] *********************************************************************************
-
-  TASK [test : Install 'service_one'] **************************************************************
-  ok: [127.0.0.1] => {
-      "service_port": 9999
-  }
-
-  TASK [test : Install 'service_two'] **************************************************************
-  ok: [127.0.0.1] => {
-      "service_port": 9999
-  }
-  ```
-
-* Выполнение плейбука при `private_role_vars = true` (как должно быть):
-  ```
-  PLAY [127.0.0.1] *********************************************************************************
-
-  TASK [test : Install 'service_one'] **************************************************************
-  ok: [127.0.0.1] => {
-      "service_port": 9999
-  }
-
-  TASK [test : Install 'service_two'] **************************************************************
-  ok: [127.0.0.1] => {
-      "service_port": 8000
-  }
-  ```
+Пример того, какой эффект оказывает этот параметр см. в приложении
 
 ## Приложения
 
@@ -1075,3 +996,144 @@ TODO: пример
   ```
 
 Хорошая статья на тему кавычкек в YAML: [Quoting](https://www.yaml.info/learn/quote.html).
+
+#### Приложение 2.
+
+* `roles/test/meta/main.yml`:
+  ```yaml
+  ---
+  galaxy_info:
+    author: Radimir Mikhailov
+    description: Test role
+    company: IT2G
+
+    license: MIT
+
+    min_ansible_version: 2.11
+
+    platforms:
+      - name: EL
+        versions:
+          - all
+
+    galaxy_tags: []
+
+  dependencies: []
+
+  argument_specs:
+    main:
+      options:
+        service_name:
+          description: Имя сервиса
+          required: true
+          type: str
+        service_port:
+          description: Порт, на котором располагается сервис
+          required: false
+          type: str
+  ```
+
+* `roles/test/defaults/main.yml`:
+  ```yaml
+  ---
+  service_port: 8000
+  ```
+
+* `roles/test/vars/main.yml`:
+  ```yaml
+  ---
+  _role_private_var: private value
+  ```
+
+* `roles/test/tasks/main.yml`:
+  ```yaml
+  ---
+  - name: Install '{{ service_name }}'
+    ansible.builtin.debug:
+      var: service_port
+  ```
+
+* плейбук:
+  ```yaml
+  - hosts: 127.0.0.1
+    connection: local
+    gather_facts: false
+    roles:
+
+      - role: test
+        vars:
+          service_name: service_one
+          service_port: 9999
+
+        # ожидается, что service_port при выполнении этой роли примет значение по-умолчанию (8000)
+      - role: test
+        vars:
+          service_name: service_two
+
+    post_tasks:
+
+        # ожидается, что приватные переменные роли недоступны из плейбука
+      - name: Access to role private variable
+        ansible.builtin.debug:
+          var: _role_private_var
+  ```
+
+##### `private_role_vars = false` (значение по-умолчанию):
+
+```
+PLAY [127.0.0.1] *********************************************************************************
+
+TASK [test : Validating arguments against arg spec 'main'] ***************************************
+ok: [127.0.0.1]
+
+TASK [test : Install 'service_one'] **************************************************************
+ok: [127.0.0.1] => {
+    "service_port": 9999
+}
+
+TASK [test : Validating arguments against arg spec 'main'] ***************************************
+ok: [127.0.0.1]
+
+TASK [test : Install 'service_two'] **************************************************************
+ok: [127.0.0.1] => {
+    "service_port": 9999
+}
+
+TASK [Access to role private variable] ***********************************************************
+ok: [127.0.0.1] => {
+    "_role_private_var": "private value"
+}
+
+PLAY RECAP ***************************************************************************************
+127.0.0.1  : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+```
+
+##### `private_role_vars = true` (как должно быть):
+
+```
+PLAY [127.0.0.1] *********************************************************************************
+
+TASK [test : Validating arguments against arg spec 'main'] ***************************************
+ok: [127.0.0.1]
+
+TASK [test : Install 'service_one'] **************************************************************
+ok: [127.0.0.1] => {
+    "service_port": 9999
+}
+
+TASK [test : Validating arguments against arg spec 'main'] ***************************************
+ok: [127.0.0.1]
+
+TASK [test : Install 'service_two'] **************************************************************
+ok: [127.0.0.1] => {
+    "service_port": 8000
+}
+
+TASK [Access to role private variable] ***********************************************************
+ok: [127.0.0.1] => {
+    "_role_private_var": "VARIABLE IS NOT DEFINED!"
+}
+
+PLAY RECAP ***************************************************************************************
+127.0.0.1  : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+```
