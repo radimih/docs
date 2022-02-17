@@ -997,7 +997,7 @@ TODO: пример
 
 Хорошая статья на тему кавычек в YAML: [Quoting](https://www.yaml.info/learn/quote.html).
 
-### Приложение 2.
+### Приложение 2. Как параметр `private_role_vars` влияет на работу с ролями
 
 * `roles/test/meta/main.yml`:
   ```yaml
@@ -1052,6 +1052,8 @@ TODO: пример
     ansible.builtin.debug:
       var: service_port
   ```
+
+В плейбуке ниже два раза вызывается роль `test` с разными аргументами
 
 * плейбук:
   ```yaml
