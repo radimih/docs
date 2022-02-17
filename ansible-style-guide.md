@@ -1065,14 +1065,14 @@ TODO: пример
           service_name: service_one
           service_port: 9999
 
-        # ожидается, что service_port при выполнении этой роли примет значение по-умолчанию (8000)
+        # Ожидается, что service_port при выполнении этой роли примет значение по-умолчанию (8000)
       - role: test
         vars:
           service_name: service_two
 
     post_tasks:
 
-        # ожидается, что приватные переменные роли недоступны из плейбука
+        # Ожидается, что приватные переменные роли недоступны из плейбука
       - name: Access to role private variable
         ansible.builtin.debug:
           var: _role_private_var
@@ -1098,12 +1098,12 @@ ok: [127.0.0.1]
 
 TASK [test : Install 'service_two'] **************************************************************
 ok: [127.0.0.1] => {
-    "service_port": 9999
-}
+    "service_port": 9999                  <--- !!! Взято значение от предыдущего запуска роли,
+}                                                  а не значение по-умолчанию (8000)
 
 TASK [Access to role private variable] ***********************************************************
 ok: [127.0.0.1] => {
-    "_role_private_var": "private value"
+    "_role_private_var": "private value"  <--- !!! Приватная переменная роли доступна вне роли!
 }
 
 PLAY RECAP ***************************************************************************************
@@ -1128,12 +1128,12 @@ ok: [127.0.0.1]
 
 TASK [test : Install 'service_two'] **************************************************************
 ok: [127.0.0.1] => {
-    "service_port": 8000
+    "service_port": 8000                             <--- Ok
 }
 
 TASK [Access to role private variable] ***********************************************************
 ok: [127.0.0.1] => {
-    "_role_private_var": "VARIABLE IS NOT DEFINED!"
+    "_role_private_var": "VARIABLE IS NOT DEFINED!"  <--- Ok
 }
 
 PLAY RECAP ***************************************************************************************
