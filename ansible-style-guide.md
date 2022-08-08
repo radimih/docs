@@ -777,7 +777,7 @@ TODO: пример
   dependencies:
     ...
 
-  argument_specs:
+  argument_specs: {}
   ```
 
 Важные замечания:
