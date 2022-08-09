@@ -751,9 +751,9 @@ TODO: пример
           [description: <краткое описание аргумента>]
           required: <обязателен ли аргумент: true | false>
           type: <тип аргумента: str | int | float | bool | list | dict | bits | bytes | json | jsonarg | path | raw >
-          [choices: <список возможных значений, если type == list>]
+          [choices: <список возможных значений>]
           [elememts: <тип элемента списка, если type == list>]
-          [options: <описание структуры, если (type == dict) | (type == list & elements == dict) и она заранее известна]
+          [options: <описание структуры, если (type == dict) | (type == list & elements == dict) и структура заранее известна]
         <имя_аргумента_2>:
           ...
         <имя_аргумента_N>:
