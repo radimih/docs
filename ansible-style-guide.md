@@ -27,8 +27,8 @@
   ```yaml
   - hosts: all
     roles:
-    - { role: manage_repository, thirdparty_repos_enable: true }
-    - { role: server_defaults }
+    - {role: manage_repository} 
+    - {role: server_defaults}
     tags:
     - initial
     - never
@@ -39,8 +39,8 @@
   ```yaml
   - hosts: all
     roles:
-      - { role: manage_repository, thirdparty_repos_enable: true }
-      - { role: server_defaults }
+      - {role: manage_repository}
+      - {role: server_defaults}
     tags:
       - initial
       - never
@@ -279,15 +279,15 @@
 * плохо:
 
   ```yaml
-  - { role: manage_repository, thirdparty_repos_enable: true, tags: [initial, never] }
-  - { role: prepare_2020, delegate_to: localhost, when: ansible_date_time.year|int <= 2020, tags: [prepare, year2020] }
+  - {role: manage_repository, thirdparty_repos_enable: true, tags: [initial, never]}
+  - {role: prepare_2020, delegate_to: localhost, when: ansible_date_time.year|int <= 2020, tags: [prepare, year2020]}
   ```
 
 * хорошо:
 
   ```yaml
-  - { role: server_defaults, tags: [initial] }
-  - { role: debian_defaults, when: ansible_os_family == 'Debian', tags: [defaults, never] }
+  - {role: server_defaults, tags: [initial]}
+  - {role: debian_defaults, when: ansible_os_family == 'Debian', tags: [defaults, never]}
 
   - role: manage_repository
     vars:
@@ -844,8 +844,8 @@ TODO: пример
         vars:
           manager_port: 9999
           apps:
-            - { name: app1, port: 8080, enabled: true, type: system, alias: main-app }
-            - { name: app2, port: 8081, enabled: false, type: user }
+            - {name: app1, port: 8080, enabled: true, type: system, alias: main-app}
+            - {name: app2, port: 8081, enabled: false, type: user}
         tags:
           - applets
   ```
@@ -1020,7 +1020,7 @@ TODO: пример
   name: service | {{ service.name }}   # никаких конфликтов с синтаксисом нет - можно без кавычек
   name: 'Testing:'                     # заканчивается символом ':'
 
-  test: { rgb_as_string: '0,120,57' }  # содержит в себе символ ',' при использовании JSON-подобного синтаксиса
+  test: {rgb_as_string: '0,120,57'}    # содержит в себе символ ',' при использовании JSON-подобного синтаксиса
   test:
     rgb_as_string: 0,120,57            # никаких конфликтов с синтаксисом нет - можно без кавычек
   ```
