@@ -16,7 +16,7 @@
 * Последняя строка в файле: всегда завершается символом конца строки (`LF`)
 * Отступы: `2` **пробела**
 
-Удобно настраивать редактор/IDE с помощью [EditorConfig](https://EditorConfig.org):
+Соответствующие параметры в `.editorconfig` (см. [EditorConfig](https://EditorConfig.org)):
 
 ```ini
 [*.{yaml,yml}]
