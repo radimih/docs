@@ -1,2 +1,3 @@
 # docs
-Разнообразные инструкции и руководства
+
+* [Ansible Style Guide](ansible-style-guide.md)
